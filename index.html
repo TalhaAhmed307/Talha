@@ -1,0 +1,143 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eashmal is a Gold Fish</title>
+    <style>
+        body {
+            background-color: #ffc0cb;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        #login-container, #info-container {
+            margin-top: 100px;
+        }
+
+        #login-container input,
+        #login-container button,
+        #info-container textarea,
+        #info-container button {
+            margin: 10px;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #login-container input {
+            width: 200px;
+        }
+
+        #login-container button,
+        #info-container button {
+            background-color: #ff69b4;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        #info-container textarea {
+            width: 300px;
+            height: 150px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+        }
+
+        #flower-animation {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            width: 100px;
+            height: 100px;
+            background-image: url('https://example.com/path/to/flower-animation.gif'); /* Replace with your flower GIF */
+            background-size: cover;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        #error-message {
+            color: #ff0000;
+        }
+
+        #saved-info {
+            margin-top: 20px;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="login-container">
+        <h1>Eashmal is a Gold Fish</h1>
+        <input type="password" id="pin-input" placeholder="Enter PIN">
+        <button onclick="checkPin()">Submit</button>
+        <p id="error-message"></p>
+    </div>
+    
+    <div id="info-container" class="hidden">
+        <h2>Welcome to Your Info Saver!</h2>
+        <textarea id="info-input" placeholder="Enter your important info here..."></textarea>
+        <button onclick="saveInfo()">Save Info</button>
+        <button onclick="clearInfo()">Clear Info</button>
+        <div id="saved-info"></div>
+    </div>
+    
+    <div id="flower-animation"></div>
+
+    <script>
+        const correctPin = '1234'; // Set your PIN here
+
+        // Initialize UI based on stored data
+        window.onload = function() {
+            const savedInfo = localStorage.getItem('savedInfo');
+            if (savedInfo) {
+                document.getElementById('saved-info').textContent = 'Saved Info: ' + savedInfo;
+            }
+        };
+
+        function checkPin() {
+            const pinInput = document.getElementById('pin-input').value;
+            const errorMessage = document.getElementById('error-message');
+            const loginContainer = document.getElementById('login-container');
+            const infoContainer = document.getElementById('info-container');
+
+            if (pinInput === correctPin) {
+                loginContainer.classList.add('hidden');
+                infoContainer.classList.remove('hidden');
+            } else {
+                errorMessage.textContent = 'Incorrect PIN, please try again.';
+            }
+        }
+
+        function saveInfo() {
+            const infoInput = document.getElementById('info-input').value;
+            const savedInfo = document.getElementById('saved-info');
+
+            if (infoInput.trim() === '') {
+                alert('Please enter some information to save.');
+                return;
+            }
+
+            localStorage.setItem('savedInfo', infoInput);
+            savedInfo.textContent = 'Saved Info: ' + infoInput;
+            document.getElementById('info-input').value = ''; // Clear input after saving
+        }
+
+        function clearInfo() {
+            localStorage.removeItem('savedInfo');
+            document.getElementById('saved-info').textContent = '';
+        }
+    </script>
+</body>
+</html>
